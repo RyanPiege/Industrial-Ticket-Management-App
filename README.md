@@ -1,8 +1,9 @@
 # Aplicativo de Gestão de Chamados – TUR
 
-> Uma solução integrada para transformar a maneira como priorizamos e gerenciamos notas de trabalho.
+> Uma solução integrada para priorização e gerenciamento de notas de trabalho e manutenção por turno.
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen)
+![Aviso](https://img.shields.io/badge/c%C3%B3digo-privado%20%2F%20fechado-red)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Google Cloud](https://img.shields.io/badge/Google%20Cloud-dados-4285F4)
 ![SharePoint](https://img.shields.io/badge/SharePoint-armazenagem-0078D4)
@@ -10,29 +11,39 @@
 
 ---
 
-## Índice
+## Nota de Confidencialidade e Restrição de Código
 
-- [Sobre o projeto](#sobre-o-projeto)
-- [Contexto e objetivos](#contexto-e-objetivos)
-- [Arquitetura](#arquitetura)
-- [Fluxo do aplicativo](#fluxo-do-aplicativo)
-- [Critérios de priorização](#critérios-de-priorização)
-- [Stack tecnológica](#stack-tecnológica)
-- [Estrutura do repositório](#estrutura-do-repositório)
-- [Como começar](#como-começar)
-- [Configuração](#configuração)
-- [Executando o pipeline](#executando-o-pipeline)
-- [SharePoint e Power Apps](#sharepoint-e-power-apps)
-- [Segurança e governança](#segurança-e-governança)
-- [Roadmap](#roadmap)
-- [Como contribuir](#como-contribuir)
-- [Contato](#contato)
+**Atenção:** Este repositório é apenas para fins de registro e apresentação do portfólio de arquitetura do projeto. 
+
+O sistema foi desenvolvido como uma solução corporativa interna e seu desenvolvimento encontra-se **concluído**. Devido a acordos de confidencialidade (NDA), regras de governança e proteção de propriedade intelectual, **o código-fonte, dados de teste, credenciais, scripts de ETL e arquivos de configuração não foram autorizados para exposição pública** e não estão disponíveis neste repositório.
 
 ---
 
+## Resumo do Projeto
+
+O **Aplicativo de Gestão de Chamados – TUR** foi concebido para centralizar, priorizar e organizar o fluxo de notas de manutenção e atendimento operacional a cada turno. A solução unificou informações que antes se encontravam dispersas em diferentes ferramentas, oferecendo à coordenação critérios automatizados, claros e objetivos para a tomada de decisão.
+
+### Desafios Resolvidos
+
+- **Visão Unificada:** Consolidação das notas provenientes do SAP e sistemas legados em uma única fila de visualização.
+- **Priorização Automatizada:** Algoritmo de cálculo de criticidade para ordenação dinâmica das demandas no aplicativo.
+- **Histórico e Rastreabilidade:** Registro completo de notas concluídas e alterações de status efetuadas pelos coordenadores.
+
+---
+
+## Arquitetura da Solução
+
+```mermaid
+flowchart LR
+    A[Fontes de Dados<br/>SAP / Sistemas Legados] --> B[(Google Cloud<br/>Dados Brutos)]
+    B --> C[Pipeline ETL em Python<br/>NumPy · Pandas · Polars]
+    C --> D[(SharePoint<br/>Listas Tratadas)]
+    D <--> E[Power Apps<br/>Interface e Operação]
+    E --> F[Encerramento no SAP]
+
 ## Sobre o projeto
 
-O **Aplicativo de Gestão de Chamados – TUR** organiza e prioriza as notas de manutenção de cada turno. Ele reúne em uma única interface informações que antes ficavam espalhadas em diferentes ferramentas e apoia a decisão da coordenação com critérios claros e objetivos.
+O **Aplicativo de Gestão de Chamados – TUR** organiza e prioriza as notas de manutenção de cada turno/área. Ele reúne em uma única interface informações que antes ficavam espalhadas em diferentes ferramentas e apoia a decisão da coordenação com critérios claros e objetivos.
 
 Este repositório contém o **pipeline de dados em Python** e a documentação da integração entre **Google Cloud (GCP)**, **SharePoint** e **Power Apps**.
 
@@ -53,16 +64,6 @@ Este repositório contém o **pipeline de dados em Python** e a documentação d
 | 2 | Integração de dados | Consolidar informações de diferentes ferramentas em uma única interface. |
 | 3 | Decisões ágeis | Permitir decisão rápida com base em critérios claros e objetivos. |
 
-## Arquitetura
-
-```mermaid
-flowchart LR
-    A[Fontes<br/>SAP e demais sistemas] --> B[(Google Cloud<br/>dados brutos)]
-    B --> C[Python<br/>NumPy · Pandas · Polars<br/>ETL]
-    C --> D[(SharePoint<br/>listas de dados tratados)]
-    D <--> E[Power Apps<br/>interface nativa]
-    E --> F[Conclusão no SAP]
-```
 
 | Camada | Responsabilidade |
 |--------|------------------|
@@ -123,55 +124,6 @@ A coordenação pode ajustar o nível de cada nota diretamente no aplicativo.
 └── README.md
 ```
 
-## Como começar
-
-### Pré-requisitos
-
-- Python 3.10 ou superior
-- Acesso ao projeto no Google Cloud, com conta de serviço autorizada
-- Acesso ao site do SharePoint onde ficam as listas
-- Licença do Power Apps para editar e publicar o aplicativo
-
-### Instalação
-
-```bash
-# 1. Clonar o repositório
-git clone <URL-DO-REPOSITORIO>
-cd <NOME-DO-REPOSITORIO>
-
-# 2. Criar e ativar o ambiente virtual
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-
-# 3. Instalar as dependências
-pip install -r requirements.txt
-```
-
-## Configuração
-
-Copie o modelo de variáveis de ambiente e preencha com os valores do seu ambiente:
-
-```bash
-cp config/settings.example.env .env
-```
-
-| Variável | Descrição |
-|----------|-----------|
-| `GCP_PROJECT_ID` | Identificador do projeto no Google Cloud. |
-| `GCP_BUCKET` / `GCP_DATASET` | Local dos dados brutos. |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Caminho do arquivo de credencial da conta de serviço. |
-| `SHAREPOINT_SITE_URL` | URL do site do SharePoint. |
-| `SHAREPOINT_LIST_NOTAS` | Nome da lista com as notas priorizadas. |
-| `SHAREPOINT_LIST_CONCLUIDAS` | Nome da lista com as notas concluídas. |
-
-> **Atenção:** nunca faça commit de credenciais, chaves ou do arquivo `.env`. Mantenha esses itens no `.gitignore`.
-
-## Executando o pipeline
-
-```bash
-python -m src.main
-```
-
 O pipeline segue cinco etapas:
 
 | Etapa | O que faz |
@@ -192,22 +144,12 @@ Recomenda-se agendar a execução de forma recorrente (por exemplo a cada iníci
   - **Chamados de Turno:** fila ordenada por criticidade, com seletor de nível por nota.
   - **Notas Concluídas:** consulta das notas já encerradas.
 
-Para importar o aplicativo, abra o Power Apps, escolha **Aplicativos → Importar pacote de tela de tela** e selecione o arquivo da pasta `powerapps/`. Em seguida, reconecte a fonte de dados às listas do seu site.
-
 ## Segurança e governança
 
 - Acesso ao GCP por IAM e contas de serviço, com privilégio mínimo.
 - Permissões do SharePoint e do Power Apps definidas por perfil de usuário.
 - Rastreabilidade de quem priorizou cada nota e quando.
 - Validação dos dados antes da publicação nas listas.
-
-## Roadmap
-
-- [ ] Consolidar as cargas do GCP e os pipelines Python
-- [ ] Validar a priorização com a coordenação
-- [ ] Expandir o aplicativo para outras áreas
-- [ ] Incluir indicadores de atendimento
-- [ ] Usar o histórico de notas para refinar as regras de priorização
 
 ## Como contribuir
 
@@ -217,9 +159,9 @@ Para importar o aplicativo, abra o Power Apps, escolha **Aplicativos → Importa
 
 ## Contato
 
-Equipe responsável: `<NOME DA EQUIPE / ÁREA>`
-Responsável técnico: `<NOME> – <E-MAIL>`
+Equipe responsável: `<Ryan Piége; Luiz Araujo / Confiabilidade e Processos>`
+Responsável técnico: `<Ryan> – <piege.dev@gmail.com>`
 
 ---
 
-Projeto interno da **Suzano**. Defina aqui a licença ou a política de uso do repositório.
+Projeto interno da **Suzano**.
