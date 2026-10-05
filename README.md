@@ -1,33 +1,74 @@
 # Aplicativo de Gestão de Chamados – TUR
 
-> Uma solução integrada para priorização e gerenciamento de notas de trabalho e manutenção por turno.
+> Solução integrada para priorização e gerenciamento de notas de manutenção e atendimento por turno.
 
 ![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen)
-![Aviso](https://img.shields.io/badge/c%C3%B3digo-privado%20%2F%20fechado-red)
+![Código](https://img.shields.io/badge/c%C3%B3digo-privado%20%2F%20fechado-red)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Google Cloud](https://img.shields.io/badge/Google%20Cloud-dados-4285F4)
-![SharePoint](https://img.shields.io/badge/SharePoint-armazenagem-0078D4)
+![SharePoint](https://img.shields.io/badge/SharePoint-armazenamento-0078D4)
 ![Power Apps](https://img.shields.io/badge/Power%20Apps-interface-742774)
 
 ---
 
 ## Nota de Confidencialidade e Restrição de Código
 
-**Atenção:** Este repositório é apenas para fins de registro e apresentação do portfólio de arquitetura do projeto. 
+> **Atenção:** este repositório possui finalidade exclusivamente documental e de apresentação da arquitetura do projeto.
 
-O sistema foi desenvolvido como uma solução corporativa interna e seu desenvolvimento encontra-se **concluído**. Devido a acordos de confidencialidade (NDA), regras de governança e proteção de propriedade intelectual, **o código-fonte, dados de teste, credenciais, scripts de ETL e arquivos de configuração não foram autorizados para exposição pública** e não estão disponíveis neste repositório.
+O **Aplicativo de Gestão de Chamados – TUR** foi desenvolvido como uma solução corporativa interna.
+
+Devido a acordos de confidencialidade (NDA), políticas de governança e proteção de propriedade intelectual, os seguintes componentes **não estão disponíveis neste repositório**:
+
+- Código-fonte completo da aplicação corporativa;
+- Dados reais ou dados de teste;
+- Credenciais e segredos;
+- Scripts internos de ETL;
+- Arquivos de configuração sensíveis;
+- Informações proprietárias dos sistemas corporativos.
+
+O conteúdo disponibilizado tem como objetivo demonstrar **arquitetura, tecnologias utilizadas, fluxo de dados e conceitos técnicos** empregados na solução.
 
 ---
 
-## Resumo do Projeto
+## Sobre o Projeto
 
-O **Aplicativo de Gestão de Chamados – TUR** foi concebido para centralizar, priorizar e organizar o fluxo de notas de manutenção e atendimento operacional a cada turno. A solução unificou informações que antes se encontravam dispersas em diferentes ferramentas, oferecendo à coordenação critérios automatizados, claros e objetivos para a tomada de decisão.
+O **Aplicativo de Gestão de Chamados – TUR** foi desenvolvido para centralizar, organizar e priorizar as notas de manutenção e atendimento operacional de cada turno.
 
-### Desafios Resolvidos
+A solução integra informações provenientes do **SAP e de sistemas legados**, processa os dados por meio de um pipeline desenvolvido em **Python** e disponibiliza as informações tratadas em uma interface operacional construída com **Microsoft Power Apps**.
 
-- **Visão Unificada:** Consolidação das notas provenientes do SAP e sistemas legados em uma única fila de visualização.
-- **Priorização Automatizada:** Algoritmo de cálculo de criticidade para ordenação dinâmica das demandas no aplicativo.
-- **Histórico e Rastreabilidade:** Registro completo de notas concluídas e alterações de status efetuadas pelos coordenadores.
+O objetivo principal é proporcionar à coordenação uma **visão única da fila de atendimento**, permitindo que as demandas sejam classificadas de acordo com critérios de criticidade e acompanhadas até sua conclusão.
+
+---
+
+## Desafios Resolvidos
+
+### Visão Unificada
+
+Consolidação das notas provenientes do SAP e de sistemas legados em uma única fila operacional.
+
+### Priorização
+
+Aplicação de critérios de criticidade para ordenar dinamicamente as demandas de manutenção.
+
+### Rastreabilidade
+
+Registro das alterações de status, priorizações e notas concluídas, permitindo maior controle sobre o histórico operacional.
+
+### Agilidade na Tomada de Decisão
+
+Disponibilização de informações organizadas em uma única interface, reduzindo a necessidade de consultar diferentes ferramentas.
+
+---
+
+## Objetivos
+
+| # | Objetivo | Descrição |
+|---|---|---|
+| 1 | **Priorização inteligente** | Classificar as notas de acordo com seu nível de criticidade. |
+| 2 | **Integração de dados** | Consolidar informações provenientes de diferentes sistemas em uma única solução. |
+| 3 | **Visibilidade operacional** | Disponibilizar uma fila única de atendimento para a coordenação. |
+| 4 | **Rastreabilidade** | Registrar alterações e notas concluídas ao longo do processo. |
+| 5 | **Agilidade** | Apoiar decisões operacionais com critérios claros e objetivos. |
 
 ---
 
@@ -35,133 +76,219 @@ O **Aplicativo de Gestão de Chamados – TUR** foi concebido para centralizar, 
 
 ```mermaid
 flowchart LR
-    A[Fontes de Dados<br/>SAP / Sistemas Legados] --> B[(Google Cloud<br/>Dados Brutos)]
-    B --> C[Pipeline ETL em Python<br/>NumPy · Pandas · Polars]
-    C --> D[(SharePoint<br/>Listas Tratadas)]
-    D <--> E[Power Apps<br/>Interface e Operação]
-    E --> F[Encerramento no SAP]
 
-## Sobre o projeto
+    A["Fontes de Dados<br/>SAP / Sistemas Legados"]
+    B[("Google Cloud<br/>Dados Brutos")]
+    C["Pipeline ETL em Python<br/>NumPy · Pandas · Polars"]
+    D[("SharePoint<br/>Listas Tratadas")]
+    E["Power Apps<br/>Interface e Operação"]
+    F["Encerramento<br/>no SAP"]
 
-O **Aplicativo de Gestão de Chamados – TUR** organiza e prioriza as notas de manutenção de cada turno/área. Ele reúne em uma única interface informações que antes ficavam espalhadas em diferentes ferramentas e apoia a decisão da coordenação com critérios claros e objetivos.
-
-Este repositório contém o **pipeline de dados em Python** e a documentação da integração entre **Google Cloud (GCP)**, **SharePoint** e **Power Apps**.
-
-## Contexto e objetivos
-
-**Desafio atual**
-
-- As notas de manutenção chegam pelo SAP e precisam ser priorizadas a cada turno.
-- A priorização depende de avaliações individuais e de ferramentas distintas.
-- Não existe uma visão única da fila de notas.
-- O histórico das notas concluídas é difícil de consultar.
-
-**Objetivos**
-
-| # | Objetivo | Descrição |
-|---|----------|-----------|
-| 1 | Priorização inteligente | Classificar as notas pela criticidade, direto no aplicativo Power Apps. |
-| 2 | Integração de dados | Consolidar informações de diferentes ferramentas em uma única interface. |
-| 3 | Decisões ágeis | Permitir decisão rápida com base em critérios claros e objetivos. |
-
-
-| Camada | Responsabilidade |
-|--------|------------------|
-| **Google Cloud** | Armazena os dados brutos e os compartilha de forma controlada com o Python. |
-| **Python** | Extrai, limpa, enriquece e pontua as notas (ETL) com NumPy e Pandas/Polars. |
-| **SharePoint** | Armazena os dados tratados e faz a comunicação com o Power Apps. |
-| **Power Apps** | Interface do usuário: fila priorizada, ajuste de criticidade e notas concluídas. |
-
-As camadas são independentes: cada etapa pode evoluir sem quebrar as demais, e o Power Apps consome apenas dados já tratados.
-
-## Fluxo do aplicativo
-
-1. O **operador** abre a nota.
-2. A **coordenação** prioriza a nota.
-3. A **manutenção** executa o serviço.
-4. A nota é **encerrada no SAP**.
-5. O **aplicativo encerra** a nota e a move para a tela de notas concluídas.
-
-## Critérios de priorização
-
-As notas são exibidas por cor de acordo com o nível de criticidade:
-
-| Nível | Cor | Significado |
-|-------|-----|-------------|
-| **Alta** | Vermelho | Exige atuação imediata. |
-| **Média** | Amarelo | Atuação planejada dentro do turno. |
-| **Baixa** | Azul | Pode aguardar janela de manutenção. |
-
-A coordenação pode ajustar o nível de cada nota diretamente no aplicativo.
-
-> As regras e os pesos usados no cálculo da criticidade ficam em `config/regras_criticidade.yaml`. Ajuste conforme o critério vigente da área.
-
-## Stack tecnológica
-
-- **Google Cloud Platform:** armazenamento e compartilhamento dos dados brutos (por exemplo Cloud Storage e BigQuery).
-- **Python 3.10+:** `numpy`, `pandas` e `polars` para transformação e cálculo.
-- **Microsoft SharePoint:** listas como base de dados do aplicativo.
-- **Microsoft Power Apps:** aplicativo canvas conectado nativamente ao SharePoint.
-
-## Estrutura do repositório
-
-> Estrutura sugerida. Adapte aos nomes reais das pastas do projeto.
-
-```text
-.
-├── config/
-│   ├── regras_criticidade.yaml   # pesos e regras de priorização
-│   └── settings.example.env      # modelo de variáveis de ambiente
-├── src/
-│   ├── extract/                  # leitura dos dados no GCP
-│   ├── transform/                # limpeza, enriquecimento e pontuação
-│   ├── load/                     # publicação no SharePoint
-│   └── main.py                   # orquestra o pipeline
-├── powerapps/                    # pacote exportado do aplicativo (.msapp / .zip)
-├── docs/                         # apresentação, diagramas e prints
-├── tests/
-├── requirements.txt
-└── README.md
+    A --> B
+    B --> C
+    C --> D
+    D <--> E
+    E --> F
 ```
 
-O pipeline segue cinco etapas:
+### Visão das Camadas
 
-| Etapa | O que faz |
-|-------|-----------|
-| **Extrair** | Lê os dados brutos no Google Cloud. |
-| **Limpar** | Remove duplicidades e padroniza campos. |
-| **Enriquecer** | Cruza as notas com cadastros e informações complementares. |
-| **Pontuar** | Calcula a criticidade com NumPy e Pandas/Polars. |
-| **Publicar** | Grava o resultado nas listas do SharePoint. |
+| Camada | Responsabilidade |
+|---|---|
+| **Google Cloud** | Armazenamento e disponibilização dos dados brutos para processamento. |
+| **Python** | Extração, limpeza, transformação, enriquecimento e cálculo da criticidade. |
+| **SharePoint** | Armazenamento dos dados tratados e integração com o Power Apps. |
+| **Power Apps** | Interface operacional para consulta, priorização e acompanhamento das notas. |
+| **SAP** | Sistema de origem e encerramento das notas de manutenção. |
 
-Recomenda-se agendar a execução de forma recorrente (por exemplo a cada início de turno) usando o agendador disponível no seu ambiente.
-
-## SharePoint e Power Apps
-
-- As **listas do SharePoint** guardam as notas priorizadas, as notas concluídas e os parâmetros de criticidade.
-- O **Power Apps** lê e grava nessas listas pelo conector nativo do SharePoint, sem necessidade de gateway.
-- O aplicativo possui duas telas principais:
-  - **Chamados de Turno:** fila ordenada por criticidade, com seletor de nível por nota.
-  - **Notas Concluídas:** consulta das notas já encerradas.
-
-## Segurança e governança
-
-- Acesso ao GCP por IAM e contas de serviço, com privilégio mínimo.
-- Permissões do SharePoint e do Power Apps definidas por perfil de usuário.
-- Rastreabilidade de quem priorizou cada nota e quando.
-- Validação dos dados antes da publicação nas listas.
-
-## Como contribuir
-
-1. Crie um branch a partir do principal: `git checkout -b feature/minha-melhoria`
-2. Faça commits pequenos e descritivos.
-3. Abra um Pull Request explicando o que mudou e por quê.
-
-## Contato
-
-Equipe responsável: `<Ryan Piége; Luiz Araujo / Confiabilidade e Processos>`
-Responsável técnico: `<Ryan> – <piege.dev@gmail.com>`
+A arquitetura foi organizada de forma modular, permitindo que cada camada evolua de maneira independente, reduzindo o acoplamento entre processamento, armazenamento e interface.
 
 ---
 
-Projeto interno da **Suzano**.
+## Fluxo de Dados
+
+O pipeline segue as seguintes etapas:
+
+```text
+SAP / Sistemas Legados
+        │
+        ▼
+   Google Cloud
+        │
+        ▼
+      Python
+        │
+        ├── Extração
+        ├── Limpeza
+        ├── Enriquecimento
+        └── Priorização
+        │
+        ▼
+    SharePoint
+        │
+        ▼
+    Power Apps
+        │
+        ▼
+ Operação / Coordenação
+        │
+        ▼
+ Encerramento no SAP
+```
+
+---
+
+## Fluxo Operacional
+
+1. A **nota de manutenção** é registrada no sistema de origem.
+2. Os dados são disponibilizados para processamento.
+3. O **pipeline Python** realiza a extração e tratamento dos dados.
+4. As notas são enriquecidas e classificadas de acordo com os critérios definidos.
+5. Os dados tratados são publicados no **SharePoint**.
+6. O **Power Apps** apresenta a fila priorizada.
+7. A **coordenação** analisa e, quando necessário, ajusta a criticidade.
+8. A **manutenção** executa o serviço.
+9. A nota é encerrada no **SAP**.
+10. O aplicativo registra a conclusão para consulta histórica.
+
+---
+
+## Critérios de Priorização
+
+As notas são classificadas de acordo com seu nível de criticidade.
+
+| Nível | Indicador | Significado |
+|---|---|---|
+| **Alta** | 🔴 Vermelho | Demanda atuação imediata ou prioridade elevada. |
+| **Média** | 🟡 Amarelo | Deve ser tratada dentro do planejamento do turno. |
+| **Baixa** | 🔵 Azul | Pode aguardar uma janela adequada de manutenção. |
+
+A coordenação pode ajustar o nível de criticidade diretamente no aplicativo, de acordo com as regras operacionais estabelecidas.
+
+> **Observação:** as regras, pesos e parâmetros de priorização são específicos do ambiente corporativo e não são disponibilizados publicamente neste repositório.
+
+---
+
+## Pipeline de Dados
+
+O processamento é estruturado em cinco etapas principais:
+
+| Etapa | Descrição |
+|---|---|
+| **Extrair** | Leitura dos dados disponibilizados no ambiente de origem. |
+| **Limpar** | Padronização de campos e tratamento de inconsistências. |
+| **Enriquecer** | Cruzamento das notas com informações complementares. |
+| **Pontuar** | Aplicação das regras de criticidade e priorização. |
+| **Publicar** | Disponibilização dos dados tratados no SharePoint. |
+
+O processamento utiliza Python e bibliotecas voltadas para manipulação e análise de dados.
+
+---
+
+## Stack Tecnológica
+
+### Dados e Processamento
+
+- **Python 3.10+**
+- **NumPy**
+- **Pandas**
+- **Polars**
+
+### Cloud
+
+- **Google Cloud Platform (GCP)**
+- Serviços de armazenamento e processamento de dados utilizados conforme a arquitetura corporativa.
+
+### Armazenamento e Integração
+
+- **Microsoft SharePoint**
+- Listas utilizadas como camada de dados para a aplicação.
+
+### Aplicação
+
+- **Microsoft Power Apps**
+- Aplicativo Canvas integrado ao SharePoint.
+
+### Sistemas Corporativos
+
+- **SAP**
+- Sistemas legados utilizados como fontes de informação operacional.
+
+---
+
+## Segurança e Governança
+
+A solução considera princípios de segurança e governança em todas as etapas do fluxo de dados.
+
+### Controle de Acesso
+
+- Controle de acesso aos recursos do Google Cloud por IAM;
+- Princípio do menor privilégio;
+- Controle de permissões no SharePoint;
+- Controle de acesso ao Power Apps conforme perfil de usuário.
+
+### Proteção de Credenciais
+
+Credenciais, tokens, chaves e informações sensíveis **não devem ser armazenados no código-fonte ou versionados no Git**.
+
+Arquivos contendo informações sensíveis devem permanecer fora do repositório público.
+
+### Rastreabilidade
+
+A solução permite registrar informações relacionadas à operação, como:
+
+- Alterações de prioridade;
+- Alterações de status;
+- Usuário responsável pela ação;
+- Data e horário das alterações;
+- Notas concluídas.
+
+---
+
+## Qualidade dos Dados
+
+Antes da publicação no SharePoint, os dados passam por etapas de tratamento e validação.
+
+O pipeline busca garantir:
+
+- Padronização dos campos;
+- Tratamento de valores inconsistentes;
+- Controle de duplicidades;
+- Validação das informações necessárias;
+- Consistência dos dados publicados.
+
+Essa abordagem reduz a possibilidade de informações inconsistentes chegarem à camada de operação.
+
+
+## Status do Projeto
+
+**Status:** ✅ Concluído
+
+O projeto foi desenvolvido como uma solução corporativa interna para apoiar o gerenciamento e a priorização das notas de manutenção por turno.
+
+Este repositório apresenta a **arquitetura, fluxo de dados, tecnologias e conceitos utilizados**, sem disponibilizar componentes proprietários ou informações confidenciais.
+
+---
+
+## Responsáveis
+
+**Equipe responsável:** Confiabilidade e Processos
+
+**Responsáveis técnicos:**  
+Ryan Piége · Luiz Araujo
+
+---
+
+## Confidencialidade
+
+> Projeto desenvolvido para uso interno da **Suzano**.
+>
+> As informações apresentadas neste documento possuem finalidade técnica e de portfólio. Dados, credenciais, informações operacionais sensíveis, código proprietário e detalhes internos dos sistemas corporativos não são disponibilizados neste repositório.
+
+---
+
+## Licença
+
+Este projeto não possui licença de código aberto.
+
+O conteúdo disponibilizado neste repositório é destinado exclusivamente à documentação e apresentação da arquitetura da solução.
